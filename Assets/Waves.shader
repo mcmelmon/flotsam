@@ -34,6 +34,7 @@ Shader "Custom/Waves"
         fixed4 _Color;
         float4 _WaveA, _WaveB, _WaveC;
 
+        // https://catlikecoding.com/unity/tutorials/flow/waves/
         float3 GerstnerWave (
 			float4 wave, float3 p, inout float3 tangent, inout float3 binormal
 		) {
