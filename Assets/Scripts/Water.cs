@@ -38,9 +38,9 @@ public class Water : MonoBehaviour
         }
         Instance = this;
         Waves = new List<Wave>() {
-            new Wave(1, 1, 0.5f, 15), 
-            new Wave(0.5f, 1, 0.2f, 5), 
-            new Wave(1, 0, 0.1f, 2)
+            new Wave(0.2f, 1.0f, 0.2f, 40), 
+            new Wave(0.0f, 0.5f, 0.1f, 30), 
+            new Wave(0.6f, 1.0f, 0.3f, 50)
         };
     }
 

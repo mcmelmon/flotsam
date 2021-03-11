@@ -14,4 +14,18 @@ public class Flotsam : MonoBehaviour
     private void Awake() {
         Body = GetComponent<Rigidbody>();
     }
+
+
+    private void FixedUpdate() {
+        Propel();
+    }
+
+    // Priate
+
+
+    private void Propel()
+    {
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        Body.AddForce(forward * 3f);
+    }
 }

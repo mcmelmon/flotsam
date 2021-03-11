@@ -77,10 +77,10 @@ Material:
     - _Wavelength: 15
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.41189036, g: 0.6209988, b: 0.9811321, a: 1}
+    - _Color: {r: 0.41176465, g: 0.61032385, b: 0.98039216, a: 1}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _WaveA: {r: 0.5, g: 0.1, b: 0.1, a: 10}
-    - _WaveB: {r: 0.3, g: 0.1, b: 0.2, a: 3}
-    - _WaveC: {r: 0.2, g: 0.2, b: 0.15, a: 4}
+    - _WaveA: {r: 0.2, g: 1, b: 0.2, a: 40}
+    - _WaveB: {r: 0, g: 0.5, b: 0.1, a: 30}
+    - _WaveC: {r: 0.6, g: 1, b: 0.3, a: 50}
   m_BuildTextureStacks: []
