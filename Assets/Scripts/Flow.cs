@@ -5,12 +5,12 @@ using UnityEngine;
 public class Flow : MonoBehaviour
 {
 
-    public float force = 2f;
+    public float force = 1.5f;
 
     // Properties
-    public Rigidbody Body { get; set; }
+    private Rigidbody Body { get; set; }
 
-    public Spigot Spigot { get; set; }
+    public Flotsam Flotsam { get; set; }
 
 
     // Unity
@@ -37,13 +37,12 @@ public class Flow : MonoBehaviour
     private IEnumerator Evaporate()
     {
         while (true) {
-            yield return new WaitForSeconds(Spigot.SpawnDelay * 2f);
-            Debug.Log("Evaporating");
+            yield return new WaitForSeconds(10f);
             Destroy(transform.gameObject);
         }
     }
     private void Propel()
     {
-        Body.AddForce(Vector3.forward * force * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        Body.AddForce((Flotsam.transform.position - transform.position).normalized * force * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
 }

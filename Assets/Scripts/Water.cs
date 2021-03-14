@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Water : MonoBehaviour
 {
-
+    public Flotsam flotsam;
     public Material material;
+    public GameObject subsurface;
     public struct Wave {
         public float x;
         public float y;
@@ -23,6 +24,8 @@ public class Water : MonoBehaviour
     // Properties
 
     public static Water Instance { get; set; }
+
+    private Vector2 Offset { get; set; }
 
     public List<Wave> Waves { get; set; }
 
@@ -42,17 +45,14 @@ public class Water : MonoBehaviour
             new Wave(0.0f, 0.5f, 0.1f, 30), 
             new Wave(0.6f, 1.0f, 0.3f, 50)
         };
-    }
 
-    void Start()
-    {
-
+        Offset = new Vector2(transform.position.x + flotsam.transform.position.x, transform.position.z + flotsam.transform.position.z);
     }
 
 
     void Update()
     {
-        
+        transform.position = new Vector3(flotsam.transform.position.x + Offset.x, transform.position.y, flotsam.transform.position.z + Offset.y);  // Offset.y is 3D Z value
     }
 
 

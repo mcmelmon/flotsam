@@ -5,6 +5,9 @@ using UnityEngine;
 public class Flotsam : MonoBehaviour
 {
 
+    public Flow flow;
+
+
     // Propertiies
 
 
@@ -15,8 +18,20 @@ public class Flotsam : MonoBehaviour
         Body = GetComponent<Rigidbody>();
     }
 
-    private void Update() {
-        Vector3 backward = transform.TransformDirection(-Vector3.forward) * 100;
-        Debug.DrawRay(transform.position, backward, Color.green);
+    private void Start() {
+        StartCoroutine(GenerateFlow());
+    }
+
+    // Private
+
+    private IEnumerator GenerateFlow()
+    {
+        while (true) {
+            yield return new WaitForSeconds(1f);
+            Vector3 direction = Quaternion.AngleAxis(Random.Range(-120.0f, 120.0f), transform.position) * (Vector3.back * 3.5f);
+            Vector3 point = transform.position + (direction * Random.Range(7,15));
+            Flow waterjet = Instantiate(flow, new Vector3(point.x, transform.position.y, point.z), Quaternion.identity);
+            waterjet.Flotsam = this;
+        }
     }
 }
