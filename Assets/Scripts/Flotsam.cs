@@ -15,17 +15,8 @@ public class Flotsam : MonoBehaviour
         Body = GetComponent<Rigidbody>();
     }
 
-
-    private void FixedUpdate() {
-        Propel();
-    }
-
-    // Priate
-
-
-    private void Propel()
-    {
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Body.AddForce(forward * 3f);
+    private void Update() {
+        Vector3 backward = transform.TransformDirection(-Vector3.forward) * 100;
+        Debug.DrawRay(transform.position, backward, Color.green);
     }
 }
