@@ -62,7 +62,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0.7
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
@@ -74,12 +74,14 @@ Material:
     - _SrcBlend: 1
     - _Steepness: 0.657
     - _UVSec: 0
+    - _WaterFogDensity: 0.05
     - _Wavelength: 15
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.41176465, g: 0.61032385, b: 0.98039216, a: 1}
+    - _Color: {r: 0.07450981, g: 0.41568628, b: 0.74509805, a: 0.42745098}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _WaterFogColor: {r: 0.0738252, g: 0.4141941, b: 0.745283, a: 0}
     - _WaveA: {r: 0.2, g: 1, b: 0.2, a: 40}
     - _WaveB: {r: 0, g: 0.5, b: 0.1, a: 30}
     - _WaveC: {r: 0.6, g: 1, b: 0.3, a: 50}

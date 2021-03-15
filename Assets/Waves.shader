@@ -9,30 +9,56 @@ Shader "Custom/Waves"
         _WaveA ("Wave A (dir, steepness, wavelength)", Vector) = (1,1,0.5,10)
         _WaveB ("Wave B", Vector) = (0,1,0.25,5)
         _WaveC ("Wave C", Vector) = (1,0,0.15,10)
+        _WaterFogColor ("Water Fog Color", Color) = (0, 0, 0, 0)
+		_WaterFogDensity ("Water Fog Density", Range(0, 2)) = 0.1
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
         LOD 200
+
+        GrabPass { "_WaterBackground" }
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows vertex:vert addshadow
+        #pragma surface surf Standard alpha finalcolor:ResetAlpha vertex:vert addshadow
 
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
 
         sampler2D _MainTex;
+        sampler2D _CameraDepthTexture, _WaterBackground;
+        float4 _CameraDepthTexture_TexelSize;
+        float3 _WaterFogColor;
+        float _WaterFogDensity;
 
         struct Input
         {
             float2 uv_MainTex;
+            float4 screenPos;
         };
 
         half _Glossiness;
         half _Metallic;
         fixed4 _Color;
         float4 _WaveA, _WaveB, _WaveC;
+
+        float3 ColorBelowWater (float4 screenPos, float3 tangentSpaceNormal) {
+            float2 uv = screenPos.xy / screenPos.w;
+            #if UNITY_UV_STARTS_AT_TOP
+                if (_CameraDepthTexture_TexelSize.y < 0) {
+                    uv.y = 1 - uv.y;
+                }
+            #endif
+
+            float backgroundDepth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture,uv));
+            float surfaceDepth = UNITY_Z_0_FAR_FROM_CLIPSPACE(screenPos.z);
+            float depthDifference = backgroundDepth - surfaceDepth;
+
+            float3 backgroundColor = tex2D(_WaterBackground, uv).rgb;
+	        float fogFactor = exp2(-_WaterFogDensity * depthDifference);
+	        return lerp(_WaterFogColor, backgroundColor, fogFactor);
+        }
 
         // https://catlikecoding.com/unity/tutorials/flow/waves/
         float3 GerstnerWave (
@@ -92,8 +118,13 @@ Shader "Custom/Waves"
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
             o.Alpha = c.a;
+            o.Emission = ColorBelowWater(IN.screenPos, o.Normal) * (1 - c.a);
         }
+
+        void ResetAlpha (Input IN, SurfaceOutputStandard o, inout fixed4 color) {
+			color.a = 1;
+		}
+
         ENDCG
     }
-    FallBack "Diffuse"
 }
