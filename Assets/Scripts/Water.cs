@@ -36,7 +36,7 @@ public class Water : MonoBehaviour
     private void Awake () {
         if (Instance != null){
             Debug.LogError("More than one water instance!");
-            Destroy(this);
+            Destroy(this.transform.gameObject);
             return;
         }
         Instance = this;
