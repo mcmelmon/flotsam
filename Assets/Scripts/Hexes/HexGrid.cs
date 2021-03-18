@@ -99,5 +99,6 @@ public class HexGrid : MonoBehaviour {
 		label.text = cell.Coordinates.ToStringOnSeparateLines();
 
         cell.UIRect = label.rectTransform;
+        cell.Elevation = 0;
 	}
 }

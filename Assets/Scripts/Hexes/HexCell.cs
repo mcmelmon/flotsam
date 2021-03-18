@@ -12,17 +12,23 @@ public class HexCell : MonoBehaviour {
         set {
             elevation = value;
 			Vector3 position = transform.localPosition;
-			position.y = value * HexMetrics.elevationStep;
+			position.y +=
+				(HexMetrics.SampleNoise(position).y * 2f - 1f) *
+				HexMetrics.elevationPerturbStrength;
 			transform.localPosition = position;
 
             if (UIRect != null) {
                 Vector3 uiPosition = UIRect.localPosition;
-                uiPosition.z = elevation * -HexMetrics.elevationStep;
+                uiPosition.z = -position.y;
                 UIRect.localPosition = uiPosition;
             }
         }}
     public HexCell[] Neighbors { get; set; }
-
+    public Vector3 Position {
+		get {
+			return transform.localPosition;
+		}
+	}
     public RectTransform UIRect { get; set; }
 
 
