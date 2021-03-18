@@ -1,29 +1,39 @@
 using UnityEngine;
 
 public class HexCell : MonoBehaviour {
+    int elevation;
 
-    public HexCoordinates coordinates;
-    public Color color;
+    // Properties
 
-    [SerializeField]
-	HexCell[] neighbors;
+    public Color Color { get; set; }
+    public HexCoordinates Coordinates { get; set; }
+    public int Elevation {
+        get { return elevation; } 
+        set {
+            elevation = value;
+			Vector3 position = transform.localPosition;
+			position.y = value * HexMetrics.elevationStep;
+			transform.localPosition = position;
+        }}
+    public HexCell[] Neighbors { get; set; }
 
 
     // Unity
 
     private void Awake() {
-        neighbors = new HexCell[6];
+        Neighbors = new HexCell[6];
+        Elevation = 0;
     }
 
     // Public
 
 
     public HexCell GetNeighbor (HexDirection direction) {
-		return neighbors[(int)direction];
+		return Neighbors[(int)direction];
 	}
 
     public void SetNeighbor (HexDirection direction, HexCell cell) {
-		neighbors[(int)direction] = cell;
-        cell.neighbors[(int)direction.Opposite()] = this;
+		Neighbors[(int)direction] = cell;
+        cell.Neighbors[(int)direction.Opposite()] = this;
 	}
 }

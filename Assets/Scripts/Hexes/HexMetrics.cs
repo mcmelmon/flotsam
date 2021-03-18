@@ -18,6 +18,8 @@ public static class HexMetrics {
 	
 	public const float blendFactor = 1f - solidFactor;
 
+	public const float elevationStep = 5f;
+
 	public static Vector3 GetBridge (HexDirection direction) {
 		return (corners[(int)direction] + corners[(int)direction + 1]) *
 			blendFactor;

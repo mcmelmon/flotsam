@@ -41,14 +41,17 @@ public class HexGrid : MonoBehaviour {
 
     // Public
 
-    public void ColorCell (Vector3 position, Color color) {
+    public HexCell GetCell (Vector3 position) {
 		position = transform.InverseTransformPoint(position);
-        HexCoordinates coordinates = HexCoordinates.FromPosition(position);
+		HexCoordinates coordinates = HexCoordinates.FromPosition(position);
 		int index = coordinates.X + coordinates.Z * width + coordinates.Z / 2;
-		HexCell cell = Cells[index];
-		cell.color = color;
+		return Cells[index];
+	}
+
+    public void Refresh () {
 		Mesh.Triangulate(Cells);
 	}
+
 
     // Private
 	
@@ -61,8 +64,8 @@ public class HexGrid : MonoBehaviour {
 		HexCell cell = Cells[i] = Instantiate<HexCell>(cellPrefab);
 		cell.transform.SetParent(transform, false);
 		cell.transform.localPosition = position;
-        cell.coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
-        cell.color = defaultColor;
+        cell.Coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
+        cell.Color = defaultColor;
 
         if (x > 0) {
 			cell.SetNeighbor(HexDirection.W, Cells[i - 1]);
@@ -86,6 +89,6 @@ public class HexGrid : MonoBehaviour {
 		label.rectTransform.SetParent(Canvas.transform, false);
 		label.rectTransform.anchoredPosition =
 			new Vector2(position.x, position.z);
-		label.text = cell.coordinates.ToStringOnSeparateLines();
+		label.text = cell.Coordinates.ToStringOnSeparateLines();
 	}
 }

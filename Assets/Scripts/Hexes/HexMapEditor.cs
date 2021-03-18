@@ -9,25 +9,42 @@ public class HexMapEditor : MonoBehaviour {
 
 	private Color activeColor;
 
-	void Awake () {
+	private int activeElevation;
+
+
+	private void Awake () {
 		SelectColor(0);
 	}
 
-	void Update () {
+	private void Update () {
 		if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()) {
 			HandleInput();
 		}
 	}
 
-	void HandleInput () {
+	// Public
+
+	public void SetElevation (float elevation) {
+		activeElevation = (int)elevation;
+	}
+
+	// Private
+
+	void EditCell (HexCell cell) {
+		cell.Color = activeColor;
+		cell.Elevation = activeElevation;
+		hexGrid.Refresh();
+	}
+
+	private void HandleInput () {
 		Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast(inputRay, out hit)) {
-			hexGrid.ColorCell(hit.point, activeColor);
+			EditCell(hexGrid.GetCell(hit.point));
 		}
 	}
 
-	public void SelectColor (int index) {
+	private void SelectColor (int index) {
 		activeColor = colors[index];
 	}
 }
