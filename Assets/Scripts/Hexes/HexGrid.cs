@@ -9,6 +9,7 @@ public class HexGrid : MonoBehaviour {
     public Text cellLabelPrefab;
     public Color defaultColor = Color.white;
 	public Color touchedColor = Color.magenta;
+    public Texture2D noiseSource;
 
     // Properties
 
@@ -31,6 +32,12 @@ public class HexGrid : MonoBehaviour {
 				CreateCell(x, z, i++);
 			}
 		}
+
+        HexMetrics.noiseSource = noiseSource;
+	}
+
+    private void OnEnable () {
+		HexMetrics.noiseSource = noiseSource;
 	}
 
 

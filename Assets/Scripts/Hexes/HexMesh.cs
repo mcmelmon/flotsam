@@ -51,10 +51,10 @@ public class HexMesh : MonoBehaviour {
 
 	private void AddQuad (Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4) {
 		int vertexIndex = Vertices.Count;
-		Vertices.Add(v1);
-		Vertices.Add(v2);
-		Vertices.Add(v3);
-		Vertices.Add(v4);
+		Vertices.Add(Perturb(v1));
+		Vertices.Add(Perturb(v2));
+		Vertices.Add(Perturb(v3));
+		Vertices.Add(Perturb(v4));
 		Triangles.Add(vertexIndex);
 		Triangles.Add(vertexIndex + 2);
 		Triangles.Add(vertexIndex + 1);
@@ -79,9 +79,9 @@ public class HexMesh : MonoBehaviour {
 
     private void AddTriangle (Vector3 v1, Vector3 v2, Vector3 v3) {
 		int vertexIndex = Vertices.Count;
-		Vertices.Add(v1);
-		Vertices.Add(v2);
-		Vertices.Add(v3);
+		Vertices.Add(Perturb(v1));
+		Vertices.Add(Perturb(v2));
+		Vertices.Add(Perturb(v3));
 		Triangles.Add(vertexIndex);
 		Triangles.Add(vertexIndex + 1);
 		Triangles.Add(vertexIndex + 2);
@@ -97,6 +97,14 @@ public class HexMesh : MonoBehaviour {
 		Colors.Add(c1);
 		Colors.Add(c2);
 		Colors.Add(c3);
+	}
+
+	Vector3 Perturb (Vector3 position) {
+		Vector4 sample = HexMetrics.SampleNoise(position);
+		position.x += (sample.x * 2f - 1f) * HexMetrics.cellPerturbStrength;
+		position.y += (sample.y * 2f - 1f) * HexMetrics.cellPerturbStrength;
+		position.z += (sample.z * 2f - 1f) * HexMetrics.cellPerturbStrength;
+		return position;
 	}
 
 	private void Triangulate (HexCell cell) {

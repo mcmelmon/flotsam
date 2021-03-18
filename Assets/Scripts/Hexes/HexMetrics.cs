@@ -20,6 +20,9 @@ public static class HexMetrics {
 	public const int terraceSteps = terracesPerSlope * 2 + 1;
 	public const float horizontalTerraceStepSize = 1f / terraceSteps;
 	public const float verticalTerraceStepSize = 1f / (terracesPerSlope + 1);
+	public static Texture2D noiseSource;
+	public const float cellPerturbStrength = 5f;
+
 
 
 	public static Vector3 GetBridge (HexDirection direction) {
@@ -51,6 +54,9 @@ public static class HexMetrics {
 
 	public static Vector3 GetSecondSolidCorner (HexDirection direction) {
 		return corners[(int)direction + 1] * solidFactor;
+	}
+	public static Vector4 SampleNoise (Vector3 position) {
+		return noiseSource.GetPixelBilinear(position.x, position.z);
 	}
 
 	public static Color TerraceLerp (Color a, Color b, int step) {
