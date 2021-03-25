@@ -14,6 +14,7 @@ public class HexGrid : MonoBehaviour {
 	public Text cellLabelPrefab;
 	public HexGridChunk chunkPrefab;
 	public HexUnit unitPrefab;
+	public HexMapGenerator mapGenerator;
 
 	public Texture2D noiseSource;
 
@@ -50,7 +51,8 @@ public class HexGrid : MonoBehaviour {
 		HexUnit.unitPrefab = unitPrefab;
 		cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 		cellShaderData.Grid = this;
-		CreateMap(cellCountX, cellCountZ, wrapping);
+		// CreateMap(cellCountX, cellCountZ, wrapping);
+		mapGenerator.GenerateMap(80, 60, true);
 	}
 
 	public void AddUnit (HexUnit unit, HexCell location, float orientation) {
