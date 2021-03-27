@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HexMapGenerator : MonoBehaviour {
@@ -91,6 +92,8 @@ public class HexMapGenerator : MonoBehaviour {
 
 	[Range(0f, 1f)]
 	public float temperatureJitter = 0.1f;
+
+	public bool riverbed = true;
 
 	HexCellPriorityQueue searchFrontier;
 
@@ -766,9 +769,22 @@ public class HexMapGenerator : MonoBehaviour {
 	}
 
 	HexCell GetRandomCell (MapRegion region) {
+
+		if (riverbed) return GetRandomRiverbankCell(region);
+
 		return grid.GetCell(
 			Random.Range(region.xMin, region.xMax),
 			Random.Range(region.zMin, region.zMax)
+		);
+	}
+
+		HexCell GetRandomRiverbankCell (MapRegion region) {
+
+		int zIndex = Random.Range(0,2) > 0 ? Random.Range(grid.cellCountZ - mapBorderZ, grid.cellCountZ) : Random.Range(0, mapBorderZ);
+
+		return grid.GetCell(
+			Random.Range(0, grid.cellCountX),
+			zIndex
 		);
 	}
 }

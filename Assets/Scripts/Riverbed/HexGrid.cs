@@ -53,7 +53,7 @@ public class HexGrid : MonoBehaviour {
 		cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 		cellShaderData.Grid = this;
 		// CreateMap(cellCountX, cellCountZ, wrapping);
-		mapGenerator.GenerateMap(30, 15, true);
+		mapGenerator.GenerateMap(60, 15, true);
 	}
 
 	public List<HexCell> UnderwaterCells() {
@@ -323,16 +323,6 @@ public class HexGrid : MonoBehaviour {
 			path.Add(c);
 		}
 		path.Add(currentPathFrom);
-		path.Reverse();
-		return path;
-	}
-
-	public List<HexCell> GetPath (HexCell start, HexCell end) {
-		List<HexCell> path = ListPool<HexCell>.Get();
-		for (HexCell c = end; c != start; c = c.PathFrom) {
-			path.Add(c);
-		}
-		path.Add(start);
 		path.Reverse();
 		return path;
 	}
