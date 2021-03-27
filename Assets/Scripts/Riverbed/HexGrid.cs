@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class HexGrid : MonoBehaviour {
 
@@ -52,7 +53,11 @@ public class HexGrid : MonoBehaviour {
 		cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 		cellShaderData.Grid = this;
 		// CreateMap(cellCountX, cellCountZ, wrapping);
-		mapGenerator.GenerateMap(80, 60, true);
+		mapGenerator.GenerateMap(30, 15, true);
+	}
+
+	public List<HexCell> UnderwaterCells() {
+		return cells.Where(c => c.IsUnderwater).ToList();
 	}
 
 	public void AddUnit (HexUnit unit, HexCell location, float orientation) {
@@ -177,6 +182,11 @@ public class HexGrid : MonoBehaviour {
 	public HexCell GetCell (int cellIndex) {
 		return cells[cellIndex];
 	}
+
+	public HexCell GetCenterOfMap() {
+		return GetCell(cellCountX / 2, cellCountZ / 2);
+	}
+
 
 	public void ShowUI (bool visible) {
 		for (int i = 0; i < chunks.Length; i++) {
@@ -313,6 +323,16 @@ public class HexGrid : MonoBehaviour {
 			path.Add(c);
 		}
 		path.Add(currentPathFrom);
+		path.Reverse();
+		return path;
+	}
+
+	public List<HexCell> GetPath (HexCell start, HexCell end) {
+		List<HexCell> path = ListPool<HexCell>.Get();
+		for (HexCell c = end; c != start; c = c.PathFrom) {
+			path.Add(c);
+		}
+		path.Add(start);
 		path.Reverse();
 		return path;
 	}

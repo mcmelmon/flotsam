@@ -66,10 +66,10 @@ public class Water : MonoBehaviour
 
     public Vector3 WaveHeight(Vector3 _point)
     {
-        Vector3 level = _point;
+        Vector3 level = new Vector3(_point.x, WaterLevel(), _point.z);
 
         foreach (var wave in Waves) {
-            level += GerstnerWave(wave, _point);
+            level += GerstnerWave(wave, new Vector3(_point.x, WaterLevel(), _point.z));
         }
 
         return level;

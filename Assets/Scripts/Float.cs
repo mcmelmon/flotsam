@@ -31,10 +31,12 @@ public class Float : MonoBehaviour
     void FixedUpdate()
     {
         Parent.Body.AddForceAtPosition(Physics.gravity / Floats.Count, transform.position, ForceMode.Acceleration);
-        float waveHeight = Water.Instance.WaveHeight(new Vector3(transform.position.x, Water.Instance.WaterLevel(), transform.position.z)).y;
+        float waterLevel = Water.Instance.WaterLevel();
+        float waveHeight = Water.Instance.WaveHeight(new Vector3(transform.position.x, waterLevel, transform.position.z)).y - waterLevel;
+        float floatHeight = transform.position.y - waterLevel;
 
-        if (transform.position.y < waveHeight) {
-            float displacementMultiplier = (waveHeight * DisplacementFactor - transform.position.y / DisplacementFactor) + 0.5f;
+        if (floatHeight < waveHeight) {
+            float displacementMultiplier = (waveHeight * DisplacementFactor - floatHeight / DisplacementFactor) + 0.5f;
             Parent.Body.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0f), transform.position, ForceMode.Acceleration);
             Parent.Body.AddForce(displacementSeed * -Parent.Body.velocity * WaterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
         }
