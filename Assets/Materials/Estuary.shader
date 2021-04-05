@@ -54,7 +54,8 @@
 
 			float water = lerp(shoreWater, river, IN.uv_MainTex.x);
 
-			float explored = IN.visibility.y;
+			// float explored = IN.visibility.w;
+			float explored = 1;
 			fixed4 c = saturate(_Color + water);
 			o.Albedo = c.rgb * IN.visibility.x;
 			o.Specular = _Specular * explored;

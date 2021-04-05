@@ -14,6 +14,9 @@ public class Flotsam : MonoBehaviour
 
 
     public Rigidbody Body { get; set; }
+    public Vector3 Target { get; set; }
+
+
     // Unity
 
     private void Awake() {
@@ -22,25 +25,35 @@ public class Flotsam : MonoBehaviour
 
     private void Start() {
         PlaceAboveWater();
-        StartCoroutine(GenerateFlow());
+        
+    }
+
+    void FixedUpdate()
+    {
+        Propel();
     }
 
     // Private
-
-    private IEnumerator GenerateFlow() {
-        while (true) {
-            yield return new WaitForSeconds(1f);
-            Vector3 direction = Quaternion.AngleAxis(Random.Range(-120.0f, 120.0f), transform.position) * (Vector3.back * 3.5f);
-            Vector3 point = transform.position + (direction * Random.Range(7,15));
-            Flow waterjet = Instantiate(flow, new Vector3(point.x, transform.position.y, point.z), Quaternion.identity);
-            waterjet.Flotsam = this;
-        }
-    }
 
     private void PlaceAboveWater() {
         HexCell center = riverbed.GetCenterOfMap();
         List<HexCell> underwaterCells = riverbed.UnderwaterCells().OrderBy(c => (c.transform.position - center.transform.position).sqrMagnitude).ToList();
         HexCell start = underwaterCells.First();
         transform.position = new Vector3(start.transform.position.x, transform.position.y, start.transform.position.z);
+    }
+
+    private void Propel()
+    {
+        Body.AddForce((Target - transform.position).normalized * Time.fixedDeltaTime, ForceMode.VelocityChange);
+    }
+
+
+    private IEnumerator SelectTarget()
+    {
+        while (true) {
+            Vector3 angle = Quaternion.AngleAxis(Random.Range(-180.0f, 180.0f), transform.position) * Vector3.forward;
+            Target = transform.position + (angle * 50);
+            yield return new WaitForSeconds(10f);
+        }
     }
 }

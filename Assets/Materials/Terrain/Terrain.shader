@@ -87,7 +87,8 @@
 				grid = tex2D(_GridTex, gridUV);
 			#endif
 
-			float explored = IN.visibility.w;
+			// float explored = IN.visibility.w;
+			float explored = 1;
 			o.Albedo = c.rgb * grid * _Color * explored;
 			#if defined(SHOW_MAP_DATA)
 				o.Albedo = IN.mapData * grid;
