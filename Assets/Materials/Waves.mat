@@ -74,14 +74,14 @@ Material:
     - _SrcBlend: 1
     - _Steepness: 0.657
     - _UVSec: 0
-    - _WaterFogDensity: 0.02
+    - _WaterFogDensity: 0
     - _Wavelength: 15
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.07450978, g: 0.5638138, b: 0.74509805, a: 0.13333334}
+    - _Color: {r: 0.09122462, g: 0.53356636, b: 0.7735849, a: 0.11372549}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _WaterFogColor: {r: 0.18422927, g: 0.3784827, b: 0.5660378, a: 1}
+    - _WaterFogColor: {r: 0.6194375, g: 0.9056604, b: 0.86819714, a: 1}
     - _WaveA: {r: 0.2, g: 1, b: 0.2, a: 40}
     - _WaveB: {r: 0, g: 0.5, b: 0.1, a: 30}
     - _WaveC: {r: 0.6, g: 1, b: 0.3, a: 50}

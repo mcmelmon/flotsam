@@ -51,7 +51,8 @@
 			blend *= noise.x + 0.5;
 			blend = smoothstep(0.4, 0.7, blend);
 
-			float explored = IN.visibility.y;
+			// float explored = IN.visibility.y;
+			float explored = 1;
 			o.Albedo = c.rgb;
 			o.Specular = _Specular * explored;
 			o.Smoothness = _Glossiness;

@@ -56,6 +56,10 @@ public class HexGrid : MonoBehaviour {
 		mapGenerator.GenerateMap(60, 15, true);
 	}
 
+	public List<HexCell> Cells() {
+		return cells.ToList();
+	}
+
 	public List<HexCell> UnderwaterCells() {
 		return cells.Where(c => c.IsUnderwater).ToList();
 	}

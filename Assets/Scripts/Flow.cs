@@ -8,9 +8,9 @@ public class Flow : MonoBehaviour
     public float force = 1.5f;
 
     // Properties
+    public Vector3 Direction { get; set; }
+    public Vector3 Target { get; set; }
     private Rigidbody Body { get; set; }
-
-    public Flotsam Flotsam { get; set; }
 
 
     // Unity
@@ -18,11 +18,16 @@ public class Flow : MonoBehaviour
 
     private void Awake() {
         Body = GetComponent<Rigidbody>();
+        Direction = Vector3.forward;
     }
 
 
     private void Start() {
         StartCoroutine(Evaporate());
+        
+        // Move toward a random point in the direction headed, so not every flow moves in a straight line
+        Vector3 angle = Quaternion.AngleAxis(Random.Range(-100.0f, 100.0f), transform.position) * Direction;
+        Target = transform.position + (angle * 250);
     }
 
     void FixedUpdate()
@@ -43,6 +48,6 @@ public class Flow : MonoBehaviour
     }
     private void Propel()
     {
-        Body.AddForce((Flotsam.transform.position - transform.position).normalized * force * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        Body.AddForce((Target - transform.position).normalized * force * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
 }

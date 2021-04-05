@@ -44,7 +44,8 @@
 			float river = River(IN.uv_MainTex, _MainTex);
 			fixed4 c = saturate(_Color + river);
 
-			float explored = IN.visibility.y;
+			// float explored = IN.visibility.y;
+			float explored = 1;
 			o.Albedo = c.rgb * IN.visibility.x;
 			o.Specular = _Specular * explored;
 			o.Smoothness = _Glossiness;
